@@ -177,9 +177,10 @@
         <label for="O3-z">大</label><br>
        
         <button type="button" onclick="submitForm()">解答</button>
+      <div id="result"></div>
+     <br>
     <h3 id="explain">パラメーターの設定法</h3>
         以下を参考に初期配置と回転量は半角数字で入力してください。
-    <div id="result"></div>
     <div class="image-container">
         <img src="image1.jpg" alt="Image 1">
         <img src="image2.jpg" alt="Image 2">
@@ -211,9 +212,9 @@ function calculateVariables(x, y, z, operations) {
     };
 }
 
- const bignum = 6*6*4;
  
         function solveMod6Equations(a1, b1, c1, d1, a2, b2, c2, d2, a3, b3, c3, d3) {
+         const bignum = 6*6*4;
           for (let x = 0; x < 6; x++) {
             for (let y = 0; y < 6; y++) {
               for (let z = 0; z < 6; z++) {
