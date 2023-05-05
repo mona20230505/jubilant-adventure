@@ -213,21 +213,31 @@ function calculateVariables(x, y, z, operations) {
 }
 
  
-        function solveMod6Equations(a1, b1, c1, d1, a2, b2, c2, d2, a3, b3, c3, d3) {
-         const bignum = 6*6*4;
-          for (let x = 0; x < 6; x++) {
-            for (let y = 0; y < 6; y++) {
-              for (let z = 0; z < 6; z++) {
-                if ((a1 * x + b1 * y + c1 * z-d1+bignum) % 6 === 0
-                    && (a2 * x + b2 * y + c2 * z-d2+bignum) % 6 === 0
-                    && (a3 * x + b3 * y + c3 * z-d3+bignum) % 6 === 0) {
-                  return { x, y, z };
-                }
-              }
-            }
+function solveMod6Equations(a1, b1, c1, d1, a2, b2, c2, d2, a3, b3, c3, d3) {
+  const bignum = 6 * 6 * 4;
+  let minSum = Infinity;
+  let minSolution = null;
+  for (let x = 0; x < 6; x++) {
+    for (let y = 0; y < 6; y++) {
+      for (let z = 0; z < 6; z++) {
+        if ((a1 * x + b1 * y + c1 * z - d1 + bignum) % 6 === 0 &&
+          (a2 * x + b2 * y + c2 * z - d2 + bignum) % 6 === 0 &&
+          (a3 * x + b3 * y + c3 * z - d3 + bignum) % 6 === 0) {
+          const sum = x + y + z;
+          if (sum < minSum) {
+            minSum = sum;
+            minSolution = { x, y, z };
           }
-          return "解が存在しません。入力データに誤りがあるかもしれません。";
         }
+      }
+    }
+  }
+  if (minSolution !== null) {
+    return minSolution;
+  } else {
+    return "解が存在しません。入力データに誤りがあるかもしれません。";
+  }
+}
 
         function submitForm() {
     const form = document.getElementById('equation-form');
