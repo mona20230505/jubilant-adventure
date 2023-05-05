@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="jp">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>崩壊スターレイル　先導羅盤ソルバー</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #0a0a1d;
+        color: #ffffff;
+        margin: 0;
+        padding: 0;
+    }
+        a {
+            color: #ff9900;
+            text-decoration: none;
+        }
+
+        a:hover {
+            color: #ffcc66;
+        }
+        
+    h3 {
+        font-size: 1.25rem;
+        margin-bottom: 0.5rem;
+        color: #FFA500;
+    }
+        .image-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            flex-direction: column;
+        }
+
+        .image-container img {
+            max-width: 500px;
+            width: 100%;
+            object-fit: cover;
+        }
+    
+    label {
+        display: inline-block;
+        width: 150px;
+        font-size: 0.9rem;
+    }
+
+    input[type="number"] {
+        background-color: #ffffff;
+        border: 1px solid #444;
+        padding: 4px 6px;
+        font-size: 0.9rem;
+        width: 70px;
+    }
+
+    input[type="radio"],
+    input[type="checkbox"] {
+        margin: 0 8px;
+    }
+
+    input[type="radio"] + label,
+    input[type="checkbox"] + label {
+        font-size: 0.9rem;
+    }
+
+    button {
+        background-color: #FFA500;
+        border: none;
+        padding: 10px 20px;
+        font-size: 1rem;
+        color: #0a0a1d;
+        cursor: pointer;
+        margin-top: 1rem;
+    }
+
+    button:hover {
+        background-color: #ffbf00;
+    }
+
+    form {
+        width: 90%;
+        max-width: 750px;
+        margin: 2rem auto;
+        padding: 20px;
+        border: 1px solid #444;
+        background-color: #1a1a33;
+        border-radius: 10px;
+    }
+
+    @media screen and (min-width: 768px) {
+        h3 {
+            font-size: 1.5rem;
+        }
+
+        label {
+            font-size: 1rem;
+        }
+
+        input[type="number"] {
+            font-size: 1rem;
+            width: 80px;
+        }
+
+        input[type="radio"] + label,
+        input[type="checkbox"] + label {
+            font-size: 1rem;
+        }
+
+        button {
+            font-size: 1.2rem;
+        }
+    }
+</style>
+</head>
+<body>
+    <form id="equation-form">
+  <form id="equation-form">
+    <h3>これは何？</h3>
+    崩壊スターレイルの先導羅盤の解法探索プログラムです。パラメータの設定方法は、<a href="#explain">ページの一番下</a>にある画像で説明しています。
+        <h3>小円盤</h3>
+        <label for="x-starting-point">初期配置:</label>
+        <input type="number" id="x-starting-point" name="x-starting-point"><br>
+        <label>回転方向:</label><br>
+        <input type="radio" id="x-sign-clockwise" name="x-sign" value="1" checked>
+        <label for="x-sign-clockwise">時計回り</label>
+        <input type="radio" id="x-sign-anticlockwise" name="x-sign" value="-1">
+        <label for="x-sign-anticlockwise">反時計回り</label><br>
+        <label for="x-variant">回転量:</label>
+        <input type="number" id="x-variant" name="x-variant"><br>
+
+        <h3>中円盤</h3>
+        <label for="y-starting-point">初期配置:</label>
+        <input type="number" id="y-starting-point" name="y-starting-point"><br>
+        <label>回転方向:</label><br>
+        <input type="radio" id="y-sign-clockwise" name="y-sign" value="1" checked>
+        <label for="y-sign-clockwise">時計回り</label>
+        <input type="radio" id="y-sign-anticlockwise" name="y-sign" value="-1">
+        <label for="y-sign-anticlockwise">反時計回り</label><br>
+        <label for="y-variant">回転量:</label>
+        <input type="number" id="y-variant" name="y-variant"><br>
+
+        <h3>大円盤</h3>
+        <label for="z-starting-point">初期配置:</label>
+        <input type="number" id="z-starting-point" name="z-starting-point"><br>
+        <label>回転方向:</label><br>
+        <input type="radio" id="z-sign-clockwise" name="z-sign" value="1" checked>
+        <label for="z-sign-clockwise">時計回り</label>
+        <input type="radio" id="z-sign-anticlockwise" name="z-sign" value="-1">
+        <label for="z-sign-anticlockwise">反時計回り</label><br>
+        <label for="z-variant">回転量:</label>
+        <input type="number" id="z-variant" name="z-variant"><br>
+
+
+        <h3>回転操作</h3>
+        <label for="O1-x">操作1:</label><br>
+        <input type="checkbox" id="O1-x" name="O1" value="x">
+        <label for="O1-x">小</label>
+        <input type="checkbox" id="O1-y" name="O1" value="y">
+        <label for="O1-y">中</label>
+        <input type="checkbox" id="O1-z" name="O1" value="z">
+        <label for="O1-z">大</label><br>
+        <label for="O2-x">操作2:</label><br>
+        <input type="checkbox" id="O2-x" name="O2" value="x">
+        <label for="O2-x">小</label>
+        <input type="checkbox" id="O2-y" name="O2" value="y">
+        <label for="O2-y">中</label>
+        <input type="checkbox" id="O2-z" name="O2" value="z">
+        <label for="O2-z">大</label><br>
+        <label for="O3-x">操作3:</label><br>
+        <input type="checkbox" id="O3-x" name="O3" value="x">
+        <label for="O3-x">小</label>
+        <input type="checkbox" id="O3-y" name="O3" value="y">
+        <label for="O3-y">中</label>
+        <input type="checkbox" id="O3-z" name="O3" value="z">
+        <label for="O3-z">大</label><br>
+       
+        <button type="button" onclick="submitForm()">解答</button>
+    <h3 id="explain">パラメーターの設定法</h3>
+        以下を参考に初期配置と回転量は半角数字で入力してください。
+    <div id="result"></div>
+    <div class="image-container">
+        <img src="image1.jpg" alt="Image 1">
+        <img src="image2.jpg" alt="Image 2">
+    </div>
+    
+    </form>
+    <script>
+    
+function calculateVariables(x, y, z, operations) {
+    const a1 = operations.O1.includes('x') ? x.sign * x.variant : 0;
+    const b1 = operations.O2.includes('x') ? x.sign * x.variant : 0;
+    const c1 = operations.O3.includes('x') ? x.sign * x.variant : 0;
+    const d1 = -x.startingPoint;
+
+    const a2 = operations.O1.includes('y') ? y.sign * y.variant : 0;
+    const b2 = operations.O2.includes('y') ? y.sign * y.variant : 0;
+    const c2 = operations.O3.includes('y') ? y.sign * y.variant : 0;
+    const d2 = -y.startingPoint;
+
+    const a3 = operations.O1.includes('z') ? z.sign * z.variant : 0;
+    const b3 = operations.O2.includes('z') ? z.sign * z.variant : 0;
+    const c3 = operations.O3.includes('z') ? z.sign * z.variant : 0;
+    const d3 = -z.startingPoint;
+
+    return {
+        a1, b1, c1, d1,
+        a2, b2, c2, d2,
+        a3, b3, c3, d3,
+    };
+}
+
+ const bignum = 6*6*4;
+ 
+        function solveMod6Equations(a1, b1, c1, d1, a2, b2, c2, d2, a3, b3, c3, d3) {
+          for (let x = 0; x < 6; x++) {
+            for (let y = 0; y < 6; y++) {
+              for (let z = 0; z < 6; z++) {
+                if ((a1 * x + b1 * y + c1 * z-d1+bignum) % 6 === 0
+                    && (a2 * x + b2 * y + c2 * z-d2+bignum) % 6 === 0
+                    && (a3 * x + b3 * y + c3 * z-d3+bignum) % 6 === 0) {
+                  return { x, y, z };
+                }
+              }
+            }
+          }
+          return "解が存在しません。入力データに誤りがあるかもしれません。";
+        }
+
+        function submitForm() {
+    const form = document.getElementById('equation-form');
+
+    const x = {
+        startingPoint: parseFloat(form['x-starting-point'].value),
+        sign: parseFloat(form['x-sign'].value),
+        variant: parseFloat(form['x-variant'].value),
+    };
+
+    const y = {
+        startingPoint: parseFloat(form['y-starting-point'].value),
+        sign: parseFloat(form['y-sign'].value),
+        variant: parseFloat(form['y-variant'].value),
+    };
+
+    const z = {
+        startingPoint: parseFloat(form['z-starting-point'].value),
+        sign: parseFloat(form['z-sign'].value),
+        variant: parseFloat(form['z-variant'].value),
+    };
+
+    const operations = {
+        O1: [],
+        O2: [],
+        O3: [],
+    };
+
+    if (form['O1-x'].checked) operations.O1.push('x');
+    if (form['O1-y'].checked) operations.O1.push('y');
+    if (form['O1-z'].checked) operations.O1.push('z');
+    if (form['O2-x'].checked) operations.O2.push('x');
+    if (form['O2-y'].checked) operations.O2.push('y');
+    if (form['O2-z'].checked) operations.O2.push('z');
+    if (form['O3-x'].checked) operations.O3.push('x');
+    if (form['O3-y'].checked) operations.O3.push('y');
+    if (form['O3-z'].checked) operations.O3.push('z');
+
+    console.log('Form values:', { x, y, z, operations });
+
+            const variables = calculateVariables(x, y, z, operations);
+            console.log('Variables:', variables);
+
+            const result = solveMod6Equations(
+                variables.a1, variables.b1, variables.c1, variables.d1,
+                variables.a2, variables.b2, variables.c2, variables.d2,
+                variables.a3, variables.b3, variables.c3, variables.d3
+            );
+            console.log('Result:', result);
+
+            const resultDiv = document.getElementById('result');
+            if (typeof result === 'string') {
+                resultDiv.innerHTML = result;
+            } else {
+                resultDiv.innerHTML = `操作1を${result.x}回,操作2を ${result.y}回, 操作3を ${result.z}回行ってください。間違えたらリセットしましょう。`;
+            }
+        }
+    </script>
+</body>
+</html>
